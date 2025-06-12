@@ -18,7 +18,7 @@ const OnboardingFlow: React.FC = () => {
   const steps = [
     {
       title: 'Welcome to TaskDefender',
-      subtitle: 'Your AI-powered productivity companion',
+      subtitle: 'Your Last Line of Defense Against Procrastination',
       component: WelcomeStep,
     },
     {
@@ -159,7 +159,7 @@ const WelcomeStep: React.FC<any> = () => (
     <div className="text-6xl mb-4">🛡️</div>
     <div className="space-y-4">
       <p className="text-lg text-gray-700 dark:text-gray-300">
-        Welcome to TaskDefender, where productivity meets personality!
+        Welcome to TaskDefender - Your Last Line of Defense Against Procrastination!
       </p>
       <p className="text-gray-600 dark:text-gray-400">
         We'll help you stay focused, motivated, and accountable with our unique blend of 
