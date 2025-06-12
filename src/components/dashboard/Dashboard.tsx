@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, Target, TrendingUp, Award, Users } from 'lucide-react';
+import { Calendar, Clock, Target, TrendingUp, Award, Users, Shield } from 'lucide-react';
 import { useApp } from '../../contexts/AppContext';
 
 const Dashboard: React.FC = () => {
@@ -21,41 +21,52 @@ const Dashboard: React.FC = () => {
       value: `${completedToday}/${todayTasks.length}`,
       icon: Target,
       color: 'text-blue-600',
-      bgColor: 'bg-blue-50 dark:bg-blue-900/20',
+      bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20',
+      borderColor: 'border-blue-200 dark:border-blue-800',
     },
     {
       title: 'Focus Time',
       value: `${Math.round(totalFocusTime / 60)}m`,
       icon: Clock,
       color: 'text-green-600',
-      bgColor: 'bg-green-50 dark:bg-green-900/20',
+      bgColor: 'bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20',
+      borderColor: 'border-green-200 dark:border-green-800',
     },
     {
       title: 'Streak',
       value: `${user?.streak || 0} days`,
       icon: TrendingUp,
       color: 'text-orange-600',
-      bgColor: 'bg-orange-50 dark:bg-orange-900/20',
+      bgColor: 'bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20',
+      borderColor: 'border-orange-200 dark:border-orange-800',
     },
     {
       title: 'Integrity Score',
       value: `${user?.integrityScore || 100}%`,
-      icon: Award,
+      icon: Shield,
       color: 'text-purple-600',
-      bgColor: 'bg-purple-50 dark:bg-purple-900/20',
+      bgColor: 'bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20',
+      borderColor: 'border-purple-200 dark:border-purple-800',
     },
   ];
 
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-orange-500 to-green-500 rounded-2xl p-8 text-white">
-        <h1 className="text-3xl font-bold mb-2">
-          Welcome back, {user?.name || 'Defender'}! 🛡️
-        </h1>
-        <p className="text-orange-100 text-lg">
-          Ready to defend your productivity today?
-        </p>
+      <div className="bg-gradient-to-r from-orange-500 to-green-500 rounded-2xl p-8 text-white shadow-xl">
+        <div className="flex items-center space-x-4 mb-4">
+          <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+            <Shield className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold">
+              Welcome back, {user?.name || 'Defender'}! 🛡️
+            </h1>
+            <p className="text-orange-100 text-lg">
+              Your Last Line of Defense Against Procrastination is ready!
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Stats Grid */}
@@ -63,7 +74,7 @@ const Dashboard: React.FC = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700"
+            className={`bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border ${stat.borderColor} ${stat.bgColor}`}
           >
             <div className="flex items-center justify-between">
               <div>
@@ -74,7 +85,7 @@ const Dashboard: React.FC = () => {
                   {stat.value}
                 </p>
               </div>
-              <div className={`p-3 rounded-lg ${stat.bgColor}`}>
+              <div className={`p-3 rounded-lg bg-white/50 dark:bg-gray-700/50`}>
                 <stat.icon className={`h-6 w-6 ${stat.color}`} />
               </div>
             </div>
@@ -97,7 +108,7 @@ const Dashboard: React.FC = () => {
             <div className="text-center py-8">
               <Target className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-500 dark:text-gray-400">No tasks scheduled for today</p>
-              <button className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors">
+              <button className="mt-4 px-4 py-2 bg-gradient-to-r from-orange-500 to-green-500 text-white rounded-lg hover:from-orange-600 hover:to-green-600 transition-all duration-200 shadow-lg hover:shadow-xl">
                 Add Task
               </button>
             </div>
@@ -119,9 +130,9 @@ const Dashboard: React.FC = () => {
                     {task.title}
                   </span>
                   <span className={`text-xs px-2 py-1 rounded ${
-                    task.priority === 'high' ? 'bg-red-100 text-red-800' :
-                    task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
-                    'bg-green-100 text-green-800'
+                    task.priority === 'high' || task.priority === 'urgent' ? 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300' :
+                    task.priority === 'medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300' :
+                    'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300'
                   }`}>
                     {task.priority}
                   </span>
@@ -149,7 +160,7 @@ const Dashboard: React.FC = () => {
             <div className="text-center py-8">
               <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
               <p className="text-gray-500 dark:text-gray-400">No focus sessions yet</p>
-              <button className="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
+              <button className="mt-4 px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:from-green-600 hover:to-blue-600 transition-all duration-200 shadow-lg hover:shadow-xl">
                 Start Focus Session
               </button>
             </div>
@@ -185,22 +196,22 @@ const Dashboard: React.FC = () => {
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center">
-            <div className="text-3xl font-bold text-green-600 mb-2">
+          <div className="text-center p-4 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800">
+            <div className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2">
               {Math.round((completedToday / Math.max(todayTasks.length, 1)) * 100)}%
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">Task Completion Rate</p>
           </div>
           
-          <div className="text-center">
-            <div className="text-3xl font-bold text-blue-600 mb-2">
+          <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent mb-2">
               {Math.round(averageFocusTime / 60)}m
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">Average Focus Time</p>
           </div>
           
-          <div className="text-center">
-            <div className="text-3xl font-bold text-orange-600 mb-2">
+          <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-lg border border-orange-200 dark:border-orange-800">
+            <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-yellow-600 bg-clip-text text-transparent mb-2">
               {user?.streak || 0}
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-400">Day Streak</p>

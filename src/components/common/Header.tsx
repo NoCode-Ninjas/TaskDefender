@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bell, Settings, User, Moon, Sun, Target, Clock, Calendar, Home } from 'lucide-react';
+import { Bell, Settings, User, Moon, Sun, Target, Clock, Calendar, Home, Shield } from 'lucide-react';
 import { useApp } from '../../contexts/AppContext';
 
 const Header: React.FC = () => {
@@ -20,12 +20,26 @@ const Header: React.FC = () => {
           {/* Logo and Title */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-gradient">
-                🛡️ TaskDefender
-              </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                Your Last Line of Defense Against Procrastination
-              </p>
+              <div className="flex items-center space-x-3">
+                {/* TaskDefender Shield Logo */}
+                <div className="relative">
+                  <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-green-500 rounded-lg flex items-center justify-center shadow-lg">
+                    <Shield className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                </div>
+                
+                <div>
+                  <h1 className="text-2xl font-bold bg-gradient-to-r from-orange-500 to-green-500 bg-clip-text text-transparent">
+                    TaskDefender
+                  </h1>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 leading-tight">
+                    Your Last Line of Defense Against Procrastination
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -37,7 +51,7 @@ const Header: React.FC = () => {
                 onClick={() => setCurrentView(item.id as any)}
                 className={`flex items-center space-x-2 px-3 py-2 rounded-lg transition-colors ${
                   currentView === item.id
-                    ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400'
+                    ? 'bg-gradient-to-r from-orange-100 to-green-100 dark:from-orange-900/20 dark:to-green-900/20 text-orange-600 dark:text-orange-400'
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
                 }`}
               >
@@ -67,7 +81,7 @@ const Header: React.FC = () => {
               <button className="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                 <Bell className="h-5 w-5" />
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs rounded-full flex items-center justify-center">
                     {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
@@ -85,7 +99,7 @@ const Header: React.FC = () => {
             {/* User Profile */}
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 bg-gradient-to-r from-orange-500 to-green-500 rounded-full flex items-center justify-center">
+                <div className="h-8 w-8 bg-gradient-to-r from-orange-500 to-green-500 rounded-full flex items-center justify-center shadow-lg">
                   <User className="h-4 w-4 text-white" />
                 </div>
                 <div className="hidden md:block">

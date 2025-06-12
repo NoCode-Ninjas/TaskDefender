@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight, ChevronLeft, Check } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, Shield } from 'lucide-react';
 import { useApp } from '../../contexts/AppContext';
 import { User } from '../../types';
 
@@ -156,7 +156,18 @@ const OnboardingFlow: React.FC = () => {
 // Step Components
 const WelcomeStep: React.FC<any> = () => (
   <div className="text-center space-y-6">
-    <div className="text-6xl mb-4">🛡️</div>
+    {/* TaskDefender Shield Logo */}
+    <div className="flex justify-center mb-6">
+      <div className="relative">
+        <div className="w-24 h-24 bg-gradient-to-br from-orange-500 to-green-500 rounded-2xl flex items-center justify-center shadow-2xl">
+          <Shield className="h-12 w-12 text-white" />
+        </div>
+        <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center shadow-lg">
+          <div className="w-4 h-4 bg-white rounded-full"></div>
+        </div>
+      </div>
+    </div>
+    
     <div className="space-y-4">
       <p className="text-lg text-gray-700 dark:text-gray-300">
         Welcome to TaskDefender - Your Last Line of Defense Against Procrastination!
@@ -166,17 +177,17 @@ const WelcomeStep: React.FC<any> = () => (
         task management and AI-powered motivation.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
-        <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+        <div className="p-4 bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 rounded-lg border border-orange-200 dark:border-orange-800">
           <div className="text-2xl mb-2">🎯</div>
           <h3 className="font-semibold text-gray-900 dark:text-gray-100">Smart Tasks</h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">Intelligent task management with AI insights</p>
         </div>
-        <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+        <div className="p-4 bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg border border-green-200 dark:border-green-800">
           <div className="text-2xl mb-2">🤖</div>
           <h3 className="font-semibold text-gray-900 dark:text-gray-100">AI Motivation</h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">Sarcastic AI that keeps you accountable</p>
         </div>
-        <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+        <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg border border-blue-200 dark:border-blue-800">
           <div className="text-2xl mb-2">🔒</div>
           <h3 className="font-semibold text-gray-900 dark:text-gray-100">Privacy First</h3>
           <p className="text-sm text-gray-600 dark:text-gray-400">Your data stays private and secure</p>
@@ -222,24 +233,28 @@ const WorkStyleStep: React.FC<any> = ({ formData, updateFormData }) => {
       title: 'Deep Focus',
       description: 'Long, uninterrupted work sessions',
       icon: '🎯',
+      gradient: 'from-orange-500 to-red-500',
     },
     {
       id: 'flexible',
       title: 'Flexible',
       description: 'Adaptable schedule with varied tasks',
       icon: '🌊',
+      gradient: 'from-blue-500 to-cyan-500',
     },
     {
       id: 'social',
       title: 'Collaborative',
       description: 'Team-based work and communication',
       icon: '👥',
+      gradient: 'from-green-500 to-emerald-500',
     },
     {
       id: 'independent',
       title: 'Independent',
       description: 'Self-directed with minimal oversight',
       icon: '🚀',
+      gradient: 'from-purple-500 to-pink-500',
     },
   ];
 
@@ -251,7 +266,7 @@ const WorkStyleStep: React.FC<any> = ({ formData, updateFormData }) => {
           onClick={() => updateFormData({ workStyle: style.id as any })}
           className={`p-6 rounded-lg border-2 transition-all duration-200 text-left ${
             formData.workStyle === style.id
-              ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20'
+              ? `border-orange-500 bg-gradient-to-br from-orange-50 to-green-50 dark:from-orange-900/20 dark:to-green-900/20`
               : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
           }`}
         >
@@ -300,7 +315,7 @@ const GoalsStep: React.FC<any> = ({ formData, updateFormData }) => {
             onClick={() => toggleGoal(goal)}
             className={`p-4 rounded-lg border-2 transition-all duration-200 text-left ${
               formData.goals.includes(goal)
-                ? 'border-green-500 bg-green-50 dark:bg-green-900/20'
+                ? 'border-green-500 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20'
                 : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
             }`}
           >
@@ -331,6 +346,7 @@ const PersonalityStep: React.FC<any> = ({ formData, updateFormData }) => {
       description: 'Witty remarks and playful mockery',
       example: '"Oh wow, another productive day of staring at your screen. Impressive."',
       icon: '😏',
+      gradient: 'from-orange-500 to-yellow-500',
     },
     {
       id: 'drill-sergeant',
@@ -338,6 +354,7 @@ const PersonalityStep: React.FC<any> = ({ formData, updateFormData }) => {
       description: 'Tough love with military precision',
       example: '"DROP AND GIVE ME TWENTY! And by twenty, I mean twenty minutes of actual work!"',
       icon: '🪖',
+      gradient: 'from-red-500 to-orange-500',
     },
     {
       id: 'disappointed-parent',
@@ -345,6 +362,7 @@ const PersonalityStep: React.FC<any> = ({ formData, updateFormData }) => {
       description: 'Gentle guilt trips and loving disappointment',
       example: '"I\'m not angry, I\'m just... disappointed. Again."',
       icon: '😔',
+      gradient: 'from-blue-500 to-indigo-500',
     },
     {
       id: 'motivational-coach',
@@ -352,6 +370,7 @@ const PersonalityStep: React.FC<any> = ({ formData, updateFormData }) => {
       description: 'Positive energy and encouraging words',
       example: '"You\'ve got this! The only thing standing between you and success is action!"',
       icon: '💪',
+      gradient: 'from-green-500 to-emerald-500',
     },
   ];
 
@@ -363,7 +382,7 @@ const PersonalityStep: React.FC<any> = ({ formData, updateFormData }) => {
           onClick={() => updateFormData({ sarcasticPersona: personality.id })}
           className={`w-full p-6 rounded-lg border-2 transition-all duration-200 text-left ${
             formData.sarcasticPersona === personality.id
-              ? 'border-orange-500 bg-orange-50 dark:bg-orange-900/20'
+              ? 'border-orange-500 bg-gradient-to-br from-orange-50 to-green-50 dark:from-orange-900/20 dark:to-green-900/20'
               : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
           }`}
         >
@@ -389,7 +408,7 @@ const PersonalityStep: React.FC<any> = ({ formData, updateFormData }) => {
 
 const PrivacyStep: React.FC<any> = ({ formData, updateFormData }) => (
   <div className="space-y-6">
-    <div className="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg">
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 p-6 rounded-lg border border-blue-200 dark:border-blue-800">
       <h3 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">
         🔒 Your Privacy Matters
       </h3>
