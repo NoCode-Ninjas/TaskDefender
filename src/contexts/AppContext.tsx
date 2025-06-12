@@ -32,6 +32,7 @@ interface AppContextType extends AppState {
   // Settings actions
   updateSettings: (updates: Partial<AppSettings>) => void;
   toggleTheme: () => void;
+  setCurrentView: (view: AppState['currentView']) => void;
 }
 
 type AppAction = 
@@ -53,6 +54,7 @@ type AppAction =
   | { type: 'DISMISS_NOTIFICATION'; payload: string }
   | { type: 'UPDATE_SETTINGS'; payload: Partial<AppSettings> }
   | { type: 'TOGGLE_THEME' }
+  | { type: 'SET_CURRENT_VIEW'; payload: AppState['currentView'] }
   | { type: 'LOAD_STATE'; payload: AppState };
 
 const initialState: AppState = {
@@ -93,6 +95,7 @@ const initialState: AppState = {
   },
   isOnboarding: true,
   currentTheme: 'light',
+  currentView: 'dashboard',
 };
 
 function appReducer(state: AppState, action: AppAction): AppState {
@@ -177,6 +180,19 @@ function appReducer(state: AppState, action: AppAction): AppState {
         ),
       };
       
+    case 'ADD_DISTRACTION':
+      return {
+        ...state,
+        focusSessions: state.focusSessions.map(session =>
+          session.id === action.payload.sessionId
+            ? {
+                ...session,
+                distractions: [...session.distractions, action.payload.distraction],
+              }
+            : session
+        ),
+      };
+      
     case 'ADD_NOTIFICATION':
       return { ...state, notifications: [...state.notifications, action.payload] };
       
@@ -202,6 +218,9 @@ function appReducer(state: AppState, action: AppAction): AppState {
     case 'TOGGLE_THEME':
       const newTheme = state.currentTheme === 'light' ? 'dark' : 'light';
       return { ...state, currentTheme: newTheme };
+      
+    case 'SET_CURRENT_VIEW':
+      return { ...state, currentView: action.payload };
       
     default:
       return state;
@@ -251,6 +270,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const task: Task = {
       ...taskData,
       id: crypto.randomUUID(),
+      userId: state.user?.id || '',
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -279,7 +299,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   
   const joinTeam = (inviteCode: string) => {
     // In a real app, this would make an API call
-    // For now, we'll simulate finding a team
     console.log('Joining team with code:', inviteCode);
   };
   
@@ -323,6 +342,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const notification: Notification = {
       ...notificationData,
       id: crypto.randomUUID(),
+      userId: state.user?.id || '',
+      sent: false,
+      read: false,
     };
     dispatch({ type: 'ADD_NOTIFICATION', payload: notification });
   };
@@ -340,6 +362,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
   
   const toggleTheme = () => dispatch({ type: 'TOGGLE_THEME' });
+  
+  const setCurrentView = (view: AppState['currentView']) => {
+    dispatch({ type: 'SET_CURRENT_VIEW', payload: view });
+  };
 
   const contextValue: AppContextType = {
     ...state,
@@ -361,6 +387,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     dismissNotification,
     updateSettings,
     toggleTheme,
+    setCurrentView,
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

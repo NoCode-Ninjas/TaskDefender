@@ -66,7 +66,7 @@ export interface Distraction {
   id: string;
   sessionId: string;
   timestamp: Date;
-  type: 'notification' | 'website' | 'app' | 'manual';
+  type: 'notification' | 'website' | 'app' | 'manual' | 'phone' | 'social-media' | 'thoughts' | 'custom';
   source?: string;
   duration?: number;
 }
@@ -131,7 +131,7 @@ export interface Notification {
 export interface SarcasticPrompt {
   id: string;
   persona: 'drill-sergeant' | 'disappointed-parent' | 'sarcastic-friend' | 'motivational-coach';
-  trigger: 'procrastination' | 'distraction' | 'low-productivity' | 'missed-deadline' | 'achievement';
+  trigger: 'procrastination' | 'distraction' | 'low-productivity' |'missed-deadline' | 'achievement';
   message: string;
   intensity: 1 | 2 | 3 | 4 | 5;
   category: 'motivation' | 'accountability' | 'celebration' | 'intervention';
@@ -189,4 +189,5 @@ export interface AppState {
   settings: AppSettings;
   isOnboarding: boolean;
   currentTheme: 'light' | 'dark';
+  currentView: 'dashboard' | 'tasks' | 'focus' | 'calendar' | 'settings';
 }
